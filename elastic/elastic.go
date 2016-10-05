@@ -164,7 +164,7 @@ func NodeToDoc(n osm.Node) *NodeDoc {
 	}
 	suggestData := NodeDocSuggestData{
 		[]string{nodeDocInfo.Name, nodeDocInfo.NameRu, nodeDocInfo.NameKk, nodeDocInfo.NameEn}, // Input
-		nodeTags["name"], // Output
+		strconv.FormatInt(n.ID, 10), // Output
 		nodeDocInfo, // Payload
 		nodeDocInfo.Population, // Weight
 	}
