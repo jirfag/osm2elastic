@@ -1,0 +1,14 @@
+{
+	"properties" : {
+		"Name" : { "type" : "string" },
+		"NameRu" : { "type" : "string" },
+		"NameKk" : { "type" : "string" },
+		"NameEn" : { "type" : "string" },
+		"SuggestData" : {
+			"type" : "completion",
+			"analyzer" : "simple",
+			"search_analyzer" : "simple",
+			"payloads" : true
+		}
+	}
+}
