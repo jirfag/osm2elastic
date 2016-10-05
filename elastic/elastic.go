@@ -1,6 +1,7 @@
 package elastic
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"strconv"
@@ -15,8 +16,8 @@ const (
 	elasticTypeName = "node"
 )
 
-func ElasticImportOsmNodes(nodes []osm.Node) {
-	client, err := elastic.NewSimpleClient()
+func ElasticImportOsmNodes(elasticAddr string, nodes []osm.Node) {
+	client, err := elastic.NewSimpleClient(elastic.SetURL(fmt.Sprintf("http://%s", elasticAddr)))
 	if err != nil {
 		panic(err)
 	}
