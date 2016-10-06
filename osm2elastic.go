@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"log"
-	"osm2elastic/osm"
-	"osm2elastic/elastic"
+	"github.com/jirfag/osm2elastic/osm"
+	"github.com/jirfag/osm2elastic/elastic"
 )
 
 func main() {
