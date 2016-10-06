@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"osm2elastic/osm"
+	"github.com/jirfag/osm2elastic/osm"
 	"gopkg.in/olivere/elastic.v2"
 )
 
