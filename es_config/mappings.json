@@ -4,6 +4,9 @@
 		"NameRu" : { "type" : "string" },
 		"NameKk" : { "type" : "string" },
 		"NameEn" : { "type" : "string" },
+
+		"Location": { "type" : "geo_point" },
+
 		"SuggestData" : {
 			"type" : "completion",
 			"analyzer" : "simple",
