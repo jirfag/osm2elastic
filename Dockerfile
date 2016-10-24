@@ -15,6 +15,7 @@ RUN git clone https://github.com/jirfag/osm2elastic.git
 ENV GOPATH=/usr/src/app/gohome
 WORKDIR osm2elastic
 RUN go get gopkg.in/olivere/elastic.v2
+RUN go get github.com/jirfag/osm2elastic
 
 CMD go run osm2elastic.go --osm-file /usr/src/app/data.asm --elastic-addr $ELASTIC_PORT_9200_TCP_ADDR:$ELASTIC_PORT_9200_TCP_PORT
 # sudo docker build -t osm2elastic .
