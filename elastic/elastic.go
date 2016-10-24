@@ -114,6 +114,7 @@ func ImportNodeBatch(client *elastic.Client, nodeBatch NodeBatch) {
 type NodeDoc struct {
 	Location ElasticLocation
 	SuggestData NodeDocSuggestData
+	Population int
 }
 
 type ElasticLocation struct {
@@ -172,11 +173,12 @@ func NodeToDoc(n osm.Node) *NodeDoc {
 		[]string{nodeDocInfo.Name, nodeDocInfo.NameRu, nodeDocInfo.NameKk, nodeDocInfo.NameEn}, // Input
 		strconv.FormatInt(n.ID, 10), // Output
 		nodeDocInfo, // Payload
-		nodeDocInfo.Population, // Weight
+		getDocWeight(nodeDocInfo), // Weight
 	}
 	ret := NodeDoc{
 		ElasticLocation{n.Lat, n.Lng}, // Location
 		suggestData, // SuggestData
+		nodeDocInfo.Population, // Population
 	}
 
 	// Primary languages should be set
@@ -186,4 +188,11 @@ func NodeToDoc(n osm.Node) *NodeDoc {
 	}
 
 	return &ret
+}
+
+func getDocWeight(doc NodeDocInfo) int {
+	if doc.Population <= 10 {
+		return 10
+	}
+	return doc.Population
 }

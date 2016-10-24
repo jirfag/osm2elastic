@@ -6,6 +6,7 @@
 		"NameEn" : { "type" : "string" },
 
 		"Location": { "type" : "geo_point" },
+		"Population": { "type" : "integer" },
 
 		"SuggestData" : {
 			"type" : "completion",
