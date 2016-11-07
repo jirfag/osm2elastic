@@ -1,10 +1,5 @@
 {
 	"properties" : {
-		"Name" : { "type" : "string" },
-		"NameRu" : { "type" : "string" },
-		"NameKk" : { "type" : "string" },
-		"NameEn" : { "type" : "string" },
-
 		"Location": { "type" : "geo_point" },
 		"Population": { "type" : "integer" },
 

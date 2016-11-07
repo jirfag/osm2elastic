@@ -13,7 +13,7 @@ import (
 
 const (
 	elasticIndexName = "osm"
-	elasticTypeName = "node"
+	elasticTypeName  = "node"
 )
 
 func ElasticImportOsmNodes(elasticAddr string, nodes []osm.Node) {
@@ -112,9 +112,9 @@ func ImportNodeBatch(client *elastic.Client, nodeBatch NodeBatch) {
 }
 
 type NodeDoc struct {
-	Location ElasticLocation
+	Location    ElasticLocation
 	SuggestData NodeDocSuggestData
-	Population int
+	Population  int
 }
 
 type ElasticLocation struct {
@@ -123,25 +123,25 @@ type ElasticLocation struct {
 }
 
 type NodeDocInfo struct {
-	OsmId int64
-	Name string // default name; in some cases there is only 'name'
-	NameRu string // russian
-	NameKk string // kazakhstan
-	NameEn string // english
-	Population int // how many people
-	Lat float64 // lattitude
-	Lon float64 // longitude
+	OsmId      int64
+	Name       string  // default name; in some cases there is only 'name'
+	NameRu     string  // russian
+	NameKk     string  // kazakhstan
+	NameEn     string  // english
+	Population int     // how many people
+	Lat        float64 // lattitude
+	Lon        float64 // longitude
 
-	Country string
-	Region string
-	PlaceType string // city OR town OR village OR hamlet 
+	Country   string
+	Region    string
+	PlaceType string // city OR town OR village OR hamlet
 }
 
 type NodeDocSuggestData struct {
-	Input []string `json:"input"`
-	Output string `json:"output"`
+	Input   []string    `json:"input"`
+	Output  string      `json:"output"`
 	Payload NodeDocInfo `json:"payload"`
-	Weight int `json:"weight"`
+	Weight  int         `json:"weight"`
 }
 
 type NodeDocSuggestDataPayload struct {
@@ -157,28 +157,28 @@ func NodeToDoc(n osm.Node) *NodeDoc {
 	population, _ := strconv.Atoi(nodeTags["population"])
 
 	nodeDocInfo := NodeDocInfo{
-		n.ID, // Id
-		nodeTags["name"], // Name
+		n.ID,                // Id
+		nodeTags["name"],    // Name
 		nodeTags["name:ru"], // NameRu
 		nodeTags["name:kk"], // NameKk
 		nodeTags["name:en"], // NameEn
-		population, // Population
-		n.Lat, // Lat
-		n.Lng, // Lon
+		population,          // Population
+		n.Lat,               // Lat
+		n.Lng,               // Lon
 		nodeTags["addr:country"], // Country
-		nodeTags["addr:region"], // Region
-		nodeTags["place"], // PlaceType
+		nodeTags["addr:region"],  // Region
+		nodeTags["place"],        // PlaceType
 	}
 	suggestData := NodeDocSuggestData{
 		[]string{nodeDocInfo.Name, nodeDocInfo.NameRu, nodeDocInfo.NameKk, nodeDocInfo.NameEn}, // Input
-		strconv.FormatInt(n.ID, 10), // Output
-		nodeDocInfo, // Payload
-		getDocWeight(nodeDocInfo), // Weight
+		strconv.FormatInt(n.ID, 10),                                                            // Output
+		nodeDocInfo,                                                                            // Payload
+		getDocWeight(nodeDocInfo),                                                              // Weight
 	}
 	ret := NodeDoc{
 		ElasticLocation{n.Lat, n.Lng}, // Location
-		suggestData, // SuggestData
-		nodeDocInfo.Population, // Population
+		suggestData,                   // SuggestData
+		nodeDocInfo.Population,        // Population
 	}
 
 	// Primary languages should be set
